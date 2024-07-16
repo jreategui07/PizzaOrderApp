@@ -30,7 +30,9 @@ class Receipt : AppCompatActivity() {
            Your Receipt: 
            Pizza type:  ${order.typeOfPizza.toString()}
            Number of slices: ${order.numberOfSlices.toString()}
-           Subtotal:  ${'$'}${"%.2f".format(order.subtotal)}
+           Price per slice: ${'$'}${"%.2f".format(order.pricePerSlice)}
+           Delivery cost: ${'$'}${"%.2f".format(order.deliveryCost)}
+           Subtotal: ${'$'}${"%.2f".format(order.subtotal)}
            Tax (13%): ${'$'}${"%.2f".format(order.tax)}
            Total: ${'$'}${"%.2f".format(order.total)}
        """.trimIndent()

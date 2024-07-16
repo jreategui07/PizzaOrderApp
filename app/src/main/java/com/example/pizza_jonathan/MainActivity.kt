@@ -13,25 +13,60 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.rgTypeOfPizza.setOnCheckedChangeListener { group, checkedId ->
+            typeOfPizzaRadioGroupPressed(checkedId)
+        }
+
+
+        binding.swEntirePizza.setOnClickListener {
+            entirePizzaSwitchPressed()
+        }
+
         binding.btnSubmitOrder.setOnClickListener {
-            goToShowData(createOrder())
+            checkValues()
         }
     }
 
-    private fun createOrder(): Order {
+    private fun typeOfPizzaRadioGroupPressed(checkedPizzaId: Int) {
+        if (checkedPizzaId == R.id.rbVegetarian) {
+            binding.ivPizza.setImageResource(R.drawable.pizza_vegetarian)
+        } else if (checkedPizzaId == R.id.rbMeat) {
+            binding.ivPizza.setImageResource(R.drawable.pizza_meat)
+        }
+    }
+
+    private fun entirePizzaSwitchPressed() {
+        val isEntirePizza: Boolean = binding.swEntirePizza.isChecked
+        if (isEntirePizza == true) {
+            binding.etNumberOfSlices.setText("8")
+        } else {
+            binding.etNumberOfSlices.setText("0")
+        }
+    }
+
+    private fun checkValues() {
         val selectedRadioButtonId = binding.rgTypeOfPizza.checkedRadioButtonId
         var typeOfPizza:String = ""
-        if (selectedRadioButtonId == R.id.rbVegetarian) { // binding.rbApple.id
+        if (selectedRadioButtonId == R.id.rbVegetarian) {
             typeOfPizza = "vegetarian"
         } else if (selectedRadioButtonId == R.id.rbMeat) {
             typeOfPizza = "meat"
+        } else {
+            binding.tvValidations.text = "Select a type of Pizza"
+            return
         }
-        return Order(
+
+        val numberOfSlices = binding.etNumberOfSlices.text.toString().toIntOrNull() ?: 0
+        if (numberOfSlices <= 0) {
+            binding.tvValidations.text = "Enter the number of slices"
+            return
+        }
+
+        goToShowData(Order(
             typeOfPizza,
-            binding.etNumberOfSlices.text.toString().toIntOrNull() ?: 0,
-            binding.swEntirePizza.isChecked,
+            numberOfSlices,
             binding.cbNeedDelivery.isChecked
-        )
+        ))
     }
 
     private fun goToShowData(order: Order) {

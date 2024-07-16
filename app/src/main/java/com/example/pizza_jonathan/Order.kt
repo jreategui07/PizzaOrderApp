@@ -8,45 +8,51 @@ enum class PizzaSlice(val price: Double) {
     VEGETARIAN(4.25)
 }
 
-val DELIVERY_COST: Double = 10.50
+val DELIVERY_FEE: Double = 10.50
 
 class Order: Serializable {
     var typeOfPizza: String = ""
     var numberOfSlices: Int = 0
-    var entirePizza: Boolean = false
-    var needDelivery: Boolean = false
+    var pricePerSlice: Double = 0.00
+    var deliveryCost: Double = 0.00
     var subtotal: Double = 0.00
     var tax: Double = 0.00
     var total: Double = 0.00
     var orderCode: Int = 0
 
     constructor(
-        typeOfPizza: String, // vegetarian/meat
+        typeOfPizza: String,
         numberOfSlices: Int,
-        entirePizza: Boolean,
         needDelivery: Boolean
     ) {
         this.typeOfPizza = typeOfPizza
         this.numberOfSlices = numberOfSlices
-        this.entirePizza = entirePizza
-        this.needDelivery = needDelivery
+        this.deliveryCost = getDeliveryCost(needDelivery)
+        this.pricePerSlice = calculatePricePerSlice()
         this.subtotal = calculateSubtotal()
         this.tax = calculateTax()
         this.total = calculateTotal()
         this.orderCode = generateOrderCode()
     }
 
+    private fun calculatePricePerSlice(): Double {
+        if (this.typeOfPizza == "meat") {
+            return PizzaSlice.MEAT.price
+        } else if (this.typeOfPizza == "vegetarian") {
+            return PizzaSlice.VEGETARIAN.price
+        }
+        return 0.00
+    }
+
+    private fun getDeliveryCost(needDelivery: Boolean): Double {
+        if (needDelivery == true) {
+            return DELIVERY_FEE
+        }
+        return 0.00
+    }
+
     private fun calculateSubtotal(): Double {
-        val pricePerSlice = when (typeOfPizza) {
-            "meat" -> PizzaSlice.MEAT.price
-            "vegetarian" -> PizzaSlice.VEGETARIAN.price
-            else -> 0.0
-        }
-        if (this.needDelivery) {
-            return (this.numberOfSlices * pricePerSlice) + DELIVERY_COST
-        } else {
-            return this.numberOfSlices * pricePerSlice
-        }
+        return (this.numberOfSlices * this.pricePerSlice) + this.deliveryCost
     }
 
     private fun calculateTax(): Double {
@@ -54,7 +60,7 @@ class Order: Serializable {
     }
 
     private fun calculateTotal(): Double {
-        return subtotal + tax
+        return this.subtotal + this.tax
     }
 
     private fun generateOrderCode(): Int {
