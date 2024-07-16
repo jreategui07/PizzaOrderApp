@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         }
         return Order(
             typeOfPizza,
-            binding.etNumberOfSlices.toString().toInt(),
+            binding.etNumberOfSlices.text.toString().toIntOrNull() ?: 0,
             binding.swEntirePizza.isChecked,
             binding.cbNeedDelivery.isChecked
         )
@@ -37,6 +37,6 @@ class MainActivity : AppCompatActivity() {
     private fun goToShowData(order: Order) {
         val intent: Intent = Intent(this@MainActivity, Receipt::class.java)
          intent.putExtra("EXTRA_ORDER", order)
-        startActivity(intent)
+         startActivity(intent)
     }
 }

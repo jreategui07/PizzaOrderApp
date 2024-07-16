@@ -26,13 +26,13 @@ class Receipt : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun showReceipt(order: Order) {
         binding.tvReceipt.text = """
-           Order Confirmed! Confirmation #: ${order.orderCode}  
+           Order Confirmed! Confirmation #: ${order.orderCode.toString()}  
            Your Receipt: 
-           Pizza type:  ${order.typeOfPizza}
-           Number of slices: ${order.numberOfSlices}
-           Subtotal:  ${order.subtotal}
-           Tax (13%):  ${order.tax}
-           Total:  ${order.total}
+           Pizza type:  ${order.typeOfPizza.toString()}
+           Number of slices: ${order.numberOfSlices.toString()}
+           Subtotal:  ${'$'}${"%.2f".format(order.subtotal)}
+           Tax (13%): ${'$'}${"%.2f".format(order.tax)}
+           Total: ${'$'}${"%.2f".format(order.total)}
        """.trimIndent()
     }
 }

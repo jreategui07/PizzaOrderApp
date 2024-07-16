@@ -42,10 +42,10 @@ class Order: Serializable {
             "vegetarian" -> PizzaSlice.VEGETARIAN.price
             else -> 0.0
         }
-        if (needDelivery) {
-            return (numberOfSlices * pricePerSlice) + DELIVERY_COST
+        if (this.needDelivery) {
+            return (this.numberOfSlices * pricePerSlice) + DELIVERY_COST
         } else {
-            return numberOfSlices * pricePerSlice
+            return this.numberOfSlices * pricePerSlice
         }
     }
 
