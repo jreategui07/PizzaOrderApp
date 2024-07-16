@@ -14,7 +14,8 @@ class Receipt : AppCompatActivity() {
         setContentView(binding.root)
 
         if (intent != null) {
-            showReceipt()
+            val order:Order = intent.getSerializableExtra("EXTRA_ORDER") as Order
+            showReceipt(order)
         }
 
         binding.btnGoBack.setOnClickListener {
@@ -23,17 +24,15 @@ class Receipt : AppCompatActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun showReceipt() {
+    private fun showReceipt(order: Order) {
         binding.tvReceipt.text = """
-           Order Confirmed! Confirmation #:  
+           Order Confirmed! Confirmation #: ${order.orderCode}  
            Your Receipt: 
-           Pizza type: 
-           Number of slices: 
-           Price per slice:  
-           Delivery cost:  
-           Subtotal: 
-           Tax (13%):  
-           Total:  
+           Pizza type:  ${order.typeOfPizza}
+           Number of slices: ${order.numberOfSlices}
+           Subtotal:  ${order.subtotal}
+           Tax (13%):  ${order.tax}
+           Total:  ${order.total}
        """.trimIndent()
     }
 }

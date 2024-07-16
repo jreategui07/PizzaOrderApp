@@ -14,12 +14,29 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnSubmitOrder.setOnClickListener {
-            goToShowData()
+            goToShowData(createOrder())
         }
     }
 
-    private fun goToShowData() {
+    private fun createOrder(): Order {
+        val selectedRadioButtonId = binding.rgTypeOfPizza.checkedRadioButtonId
+        var typeOfPizza:String = ""
+        if (selectedRadioButtonId == R.id.rbVegetarian) { // binding.rbApple.id
+            typeOfPizza = "vegetarian"
+        } else if (selectedRadioButtonId == R.id.rbMeat) {
+            typeOfPizza = "meat"
+        }
+        return Order(
+            typeOfPizza,
+            binding.etNumberOfSlices.toString().toInt(),
+            binding.swEntirePizza.isChecked,
+            binding.cbNeedDelivery.isChecked
+        )
+    }
+
+    private fun goToShowData(order: Order) {
         val intent: Intent = Intent(this@MainActivity, Receipt::class.java)
+         intent.putExtra("EXTRA_ORDER", order)
         startActivity(intent)
     }
 }
