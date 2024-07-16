@@ -3,9 +3,9 @@ package com.example.pizza_jonathan
 import java.io.Serializable
 import kotlin.random.Random
 
-enum class PizzaSlice(val price: Double) {
-    MEAT(6.70),
-    VEGETARIAN(4.25)
+enum class PizzaSlice(val type: String, val price: Double) {
+    MEAT("meat", 6.70),
+    VEGETARIAN("vegetarian", 4.25)
 }
 
 val DELIVERY_FEE: Double = 10.50
@@ -36,9 +36,9 @@ class Order: Serializable {
     }
 
     private fun calculatePricePerSlice(): Double {
-        if (this.typeOfPizza == "meat") {
+        if (this.typeOfPizza == PizzaSlice.MEAT.type) {
             return PizzaSlice.MEAT.price
-        } else if (this.typeOfPizza == "vegetarian") {
+        } else if (this.typeOfPizza == PizzaSlice.VEGETARIAN.type) {
             return PizzaSlice.VEGETARIAN.price
         }
         return 0.00

@@ -48,9 +48,9 @@ class MainActivity : AppCompatActivity() {
         val selectedRadioButtonId = binding.rgTypeOfPizza.checkedRadioButtonId
         var typeOfPizza:String = ""
         if (selectedRadioButtonId == R.id.rbVegetarian) {
-            typeOfPizza = "vegetarian"
+            typeOfPizza = PizzaSlice.VEGETARIAN.type
         } else if (selectedRadioButtonId == R.id.rbMeat) {
-            typeOfPizza = "meat"
+            typeOfPizza = PizzaSlice.MEAT.type
         } else {
             binding.tvValidations.text = "Select a type of Pizza"
             return

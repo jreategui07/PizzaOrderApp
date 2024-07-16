@@ -28,7 +28,7 @@ class Receipt : AppCompatActivity() {
         binding.tvReceipt.text = """
            Order Confirmed! Confirmation #: ${order.orderCode.toString()}  
            Your Receipt: 
-           Pizza type:  ${order.typeOfPizza.toString()}
+           Pizza type:  ${order.typeOfPizza.toString().replaceFirstChar { it.uppercase() }}
            Number of slices: ${order.numberOfSlices.toString()}
            Price per slice: ${'$'}${"%.2f".format(order.pricePerSlice)}
            Delivery cost: ${'$'}${"%.2f".format(order.deliveryCost)}
