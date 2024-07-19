@@ -3,13 +3,6 @@ package com.example.pizza_jonathan
 import java.io.Serializable
 import kotlin.random.Random
 
-enum class PizzaSlice(val type: String, val price: Double) {
-    MEAT("meat", 6.70),
-    VEGETARIAN("vegetarian", 4.25)
-}
-
-val DELIVERY_FEE: Double = 10.50
-
 class Order: Serializable {
     var typeOfPizza: String = ""
     var numberOfSlices: Int = 0
@@ -46,7 +39,7 @@ class Order: Serializable {
 
     private fun getDeliveryCost(needDelivery: Boolean): Double {
         if (needDelivery == true) {
-            return DELIVERY_FEE
+            return Constants.DELIVERY_FEE
         }
         return 0.00
     }
